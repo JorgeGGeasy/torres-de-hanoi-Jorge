@@ -14,5 +14,24 @@ namespace Torres_de_Hanoi
         public String Valor { get; set; }
         */
 
+        private int tamanyo;
+
+        public int Valor {
+            get
+            {
+                return this.tamanyo;
+            } 
+            
+            set
+            { 
+                this.tamanyo = value;
+
+            }
+        }
+
+        public Disco(int tamanyo){
+            this.tamanyo = tamanyo;
+        }
+
     }
 }
