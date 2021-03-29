@@ -17,6 +17,13 @@ namespace Torres_de_Hanoi
             int n;
             bool numero = false;
 
+
+            // Introducimos el metodo para la resolución
+            Console.WriteLine("Introduzca 1 para la solución iterativa, 2 para la recursiva");
+            String opcion;
+            opcion=Console.ReadLine();
+            int numopcion;
+
             // Comprobamos si el numero es valido
             try
             {
@@ -31,11 +38,28 @@ namespace Torres_de_Hanoi
             {
                 Console.WriteLine("Numero introducido no valido, pulse cualquier tecla para cerrar el programa.");
             }
+
+            // Comprobamos si el numero es valido
+            try
+            {
+                if(!int.TryParse(opcion, out numopcion)){
+                
+                    numero = false;
+                    throw new ArgumentException("Opcion introducida no valida.");
+                
+                }
+            }
+            catch (ArgumentException erroropcion)
+            {
+                Console.WriteLine("Opcion introducida no valida, pulse cualquier tecla para cerrar el programa.");
+            }
+
             
             // Si el numero es valido empezamos las operaciones
             if(numero){
             
                 n = int.Parse(texto);
+                numopcion = int.Parse(opcion);
 
                 if(n<=0){
                     Console.WriteLine("Introduce un numero mayor que 0, pulse cualquier tecla para cerrar el programa");
@@ -46,11 +70,9 @@ namespace Torres_de_Hanoi
                 Console.WriteLine("El numero introducido es: " + n.ToString());
 
                 List<Disco> discos = new List<Disco>();
-                List<Disco> discosRecursivos = new List<Disco>();
 
                 for(int i = 0; i < n; i++){
                  discos.Add(new Disco(n-i));
-                 discosRecursivos.Add(new Disco(n-i));
                 }
                 Console.WriteLine("Discos creados: " + discos.Count.ToString());
 
@@ -61,27 +83,37 @@ namespace Torres_de_Hanoi
                 // Creamos la tercera pila
                 Pila tercera = new Pila("Fin");
 
-                // Creamos la primera pila recursiva
-                Pila primeraRecursiva = new Pila(discosRecursivos.Count, discosRecursivos[discosRecursivos.Count-1].Valor, discosRecursivos, "Ini");
-                // Creamos la segunda pila recursiva
-                Pila segundaRecursiva = new Pila("Aux");
-                // Creamos la tercera pila recursiva
-                Pila terceraRecursiva = new Pila("Fin");
+                if(numopcion == 1){
+                    Console.WriteLine("Opcion iterativa");
 
-                Console.WriteLine("Resolución iterativa: ");
+                     int moves = Hanoi.iterativo(n,primera,segunda,tercera);
+                     if(moves != (Math.Pow(2,n)-1)){
+                    
+                        Console.WriteLine("Movimientos solución iterativa: " + moves.ToString() + " solución incorrecta");
 
-                int moves = Hanoi.iterativo(n,primera,segunda,tercera);
-                Console.WriteLine("Movimientos solución iterativa: " + moves.ToString());
+                     }else{
+
+                        Console.WriteLine("Movimientos solución iterativa: " + moves.ToString() + " solución en el minimo numero de movimientos");
+
+                     }
+                }
+                else{
+                    Console.WriteLine("Opcion recursiva");
+
+                    int moves = Hanoi.recursivo(n,primera,segunda,tercera);
                 
-                // Reseteamos la variable movimientos de Hanoi a su valor original
-                Hanoi.movimientos=0;
+                    if(moves != (Math.Pow(2,n)-1)){
+                    
+                        Console.WriteLine("Movimientos solución recursiva: " + moves.ToString() + " solución incorrecta");
 
-                Console.WriteLine("Resolución recursiva: ");
+                    }else{
+
+                        Console.WriteLine("Movimientos solución recursiva: " + moves.ToString() + " solución en el minimo numero de movimientos");
+
+                    }
+                }
                 
-                int movesRecursivos = Hanoi.recursivo(n,primeraRecursiva,segundaRecursiva,terceraRecursiva);
-                Console.WriteLine("Movimientos solución recursiva: " + movesRecursivos.ToString());
             }
-
             Console.WriteLine("Fin.");
             Console.ReadKey();
         }
