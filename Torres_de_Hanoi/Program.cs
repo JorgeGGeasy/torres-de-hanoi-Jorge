@@ -67,6 +67,12 @@ namespace Torres_de_Hanoi
                     return;
                 }
 
+                if(numopcion > 2 || numopcion < 1){
+                    Console.WriteLine("Introduce 1 o 2 para seleccionar una opción, pulse cualquier tecla para cerrar el programa");
+                    Console.ReadKey();
+                    return;
+                }
+
                 Console.WriteLine("El numero introducido es: " + n.ToString());
 
                 List<Disco> discos = new List<Disco>();
