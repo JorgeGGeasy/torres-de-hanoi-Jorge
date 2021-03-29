@@ -8,12 +8,7 @@ namespace Torres_de_Hanoi
 {
     class Disco
     {
-        /*TODO: 
-        Decidir tipo de Valor
-        public int Valor { get; set; }
-        public String Valor { get; set; }
-        */
-
+        // Disco solo tiene un dato que me interese, el tamaño
         private int tamanyo;
 
         public int Valor {
